@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guessing Game</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container shadow p-3 mt-5 bg-body d-flex flex-column justify-content-center align-items-center"
+     style="max-width: 30rem">
+    <h1 class="mb-3">Make a Guess</h1>
+    <div class="mb-3">
+        <p th:text="${game.word.hint}"></p>
+    </div>
+    <form action="#" th:action="@{/game/guess}" method="post">
+        <div class="mb-3">
+            <label for="guess" class="form-label">Your Guess</label>
+            <input type="text" class="form-control text-center" id="guess" name="guess" maxlength="5" autofocus>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-outline-success w-100">Guess</button>
+        </div>
+        <div class="mb-3">
+            <span>Lives left: <span th:text="${game.triesLeft}"/></span>
+        </div>
+        <div class="mb-3" th:if="${game.guesses != null}">
+            <ol class="list-group">
+                <li th:each="guess : ${#strings.arraySplit(game.guesses, ',')}" th:text="${guess}"
+                    class="list-group-item disabled text-center"></li>
+            </ol>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-outline-danger w-100" th:formaction="@{/game/surrender}">Quit Game
+            </button>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-outline-danger w-100" th:formaction="@{/player/logout}">Logout
+            </button>
+        </div>
+    </form>
+</div>
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
